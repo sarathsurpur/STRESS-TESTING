@@ -1,4 +1,5 @@
 import mysql.connector
+import time
 
 #establishing connection to db
 
@@ -17,6 +18,9 @@ for x in mycursor:
 
 #to select the database
 mycursor.execute("use testdb")
+
+#to capture the start time
+start = time.time()
 
 #to create a table
 mycursor.execute("CREATE TABLE `demo14`(`col1` INT ENCRYPTED FOR(MULTIPLICATION, ADDITION, SEARCH),`col2` DOUBLE ENCRYPTED FOR(MULTIPLICATION, ADDITION, SEARCH),`col3` TEXT ENCRYPTED FOR(STORE),`col4` VARCHAR(20),`col5` VARCHAR(20));")
@@ -134,7 +138,7 @@ mycursor = mydb.cursor()
 mycursor.execute("use testdb")  
   
 #scenario-2 for selecting records  
-mycursor.execute("SELECT col1,col2*col2,col3 FROM demo14 where col1>1900")
+mycursor.execute("SELECT col1,col2*col2,col3 FROM demo14 where col1>100")
 myresult = mycursor.fetchall()
 for x in myresult:
   print(x)
@@ -160,4 +164,11 @@ for i in range(100):
     mycursor.execute(sql, inputs)
 
 mydb.commit()
+
+#end time of all the run queries
+end = time.time()
+
+#total time taken to execute all the queries
+print("total time taken:"+str(end-start))
+
 
