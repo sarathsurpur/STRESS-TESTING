@@ -168,7 +168,8 @@ mydb.commit()
 #end time of all the run queries
 end = time.time()
 
+a = end - start
 #total time taken to execute all the queries
-print("total time taken:"+str(end-start))
+print("total time taken:"+str(a))
 
 
