@@ -66,6 +66,10 @@ def testing():
     a = end - start
 #total time taken to execute all the queries
     print("total time taken:"+str(a))
+    
+    #closing connection
+    mycursor.close()
+    mydb.close()
 
 threads = []
 
