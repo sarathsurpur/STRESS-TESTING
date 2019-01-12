@@ -6,16 +6,14 @@ import traceback
 import sys
 
 def testing(): 
-    connection = 0
-    for i in range(3):
-        mydb = mysql.connector.connect(host="155.69.149.158",port=6000,user="root",passwd="toor")
-        mycursor = mydb.cursor()
+    try:
+        for i in range(3):
+            mydb = mysql.connector.connect(host="155.69.149.158",port=6000,user="root",passwd="toor")
+            mycursor = mydb.cursor()
 
-        #to select the database
-        mycursor.execute("use testdb")
+            #to select the database
+            mycursor.execute("use testdb")
 
-
-        try:
             #generating random table names
             letters = string.ascii_lowercase
             tname = ''.join(random.choice(letters) for i in range(4))
@@ -45,7 +43,7 @@ def testing():
 
             #selecting records
             s_start = time.time()
-            mycursor.execute("SELECT col1,col2*col2,col3 FROM %s where col1<100;"%tname)
+            mycursor.execute("SELECT col1,col2*col2,col3 FROM %s where col1<10;"%tname)
             myresult = mycursor.fetchall()
             for x in myresult:
                 print(x)
@@ -57,16 +55,16 @@ def testing():
          #closing connection
             mycursor.close()
             mydb.close()
-            
-            connection += 1
 
-        except Exception as exc:
-            sttime = datetime.now().strftime('%Y%m%d_%H:%M:%S - ')
-            error = "ERROR! {}".format(exc)
-            log = 'testlog.txt'
-            with open(log, 'a') as logfile:
-                logfile.write(sttime + error + '\n')
-            raise
+        
+
+    except Exception as exc:
+        sttime = datetime.now().strftime('%Y%m%d_%H:%M:%S - ')
+        error = "ERROR! {}".format(exc)
+        log = 'testlog.txt'
+        with open(log, 'a') as logfile:
+            logfile.write(sttime + error + '\n')
+        raise
     
 
 threads = []
