@@ -19,7 +19,7 @@ def testing():
             #generating random table names
             letters = string.ascii_lowercase
             tname = ''.join(random.choice(letters) for i in range(4))
-
+            print("Table name:"+str(tname))
             #to capture the start time
             c_start = time.time()
             #creating the table
