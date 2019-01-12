@@ -37,15 +37,18 @@ for opt, arg in options:
         print("Unknown arg")
         sys.exit()
 
-def testing(): 
-    
-#establishing connection to db
-
+def testing():
+    print ("number of threads:"+str(update))
+    print("host"+ip)
+    print("port"+prt) 
+    print("thread"+th)
+    print("insert"+rows)
+    print("select"+select)
     mydb = mysql.connector.connect(
       host=ip,
-        port=prt,
+        port=int(prt),
       user="root",
-      passwd="toor",
+      passwd="toor"
       )
     mycursor = mydb.cursor()
 
@@ -55,6 +58,7 @@ def testing():
     for x in mycursor:
       print(x)
 
+
 #to select the database
     mycursor.execute("use testdb")
 
@@ -62,7 +66,7 @@ def testing():
     start = time.time()
     letters = string.ascii_lowercase
     tname = ''.join(random.choice(letters) for i in range(4))
-    print(tname)
+    print("table name"+tname)
 
 #to create a table
     sql = ("""CREATE TABLE %s (`col1` INT ENCRYPTED FOR(MULTIPLICATION, ADDITION, SEARCH, RANGE),
@@ -71,7 +75,7 @@ def testing():
     mycursor.execute(sql)
 
 #inserting rows in batches to the table(repeating until 20k records from here)
-    for k in range(1,rows):
+    for k in range(1,int(rows)):
         sql = "INSERT INTO %s (col1, col2, col3, col4, col5) VALUES (%s, %s,%s,%s,%s);"
         val = (tname,k,k*3,k*8,"'JURONG"+str(k) +"'", "'NTU-"+str(k)+"'")
         m = sql%val
@@ -80,12 +84,11 @@ def testing():
 
     mydb.commit() 
     
-    sql = "SELECT col1,col2*col2,col3 FROM %s where col1<%s;"
-    Val = (tname,select)
+    sql = "SELECT col1,col2*col2,col3 FROM %s where col1<%s;"%(tname,int(select))
 
 
     #selecting the records from table
-    mycursor.execute(sql,val)
+    mycursor.execute(sql)
     myresult = mycursor.fetchall()
     for x in myresult:
         print(x)
@@ -110,9 +113,11 @@ def testing():
 
 threads = []
 
-for i in range(th):
+for i in range(int(th)):
     print (i)
     t = threading.Thread(target=testing)
     threads.append(t)
     t.start()
     t.join()
+
+    
