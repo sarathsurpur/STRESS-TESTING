@@ -6,24 +6,36 @@ import threading
 import random, string
 
 
-options, remainder = getopt.getopt(sys.argv[1:], 'a:v', 'server','ip','port','threads','Insertrows','performinsert','performselect','performupdate')
+try:
+    options, remainder = getopt.getopt(sys.argv[1:], 'a:p:t:i:s:u:',['ip','port','threads','performinsert','performselect','performupdate'])
+except getopt.GetoptError:
+    print('Incorrect options.')
+    sys.exit()    
 
+ip=''
+prt=''
+th=''
+rows=''
+select=''
+update=''
 for opt, arg in options:
-    if opt in ('-s', '--server'):
-        server = arg
-    elif opt in ('-a', '--ip'):
+    if opt in ('-a', '--ip'):
         ip = arg
+        #print(ip)
     elif opt in ('-p', '--port'):
         prt = arg
-    elif opt in ('-t', '--threads'):
+        
+    elif opt in ('-t','--thread'):
         th = arg
-    elif opt in ('-i', '--insertrows'):
+    elif opt in ('-i','--performinsert'):
         rows = arg
-    elif opt in ('-s', '--select'):
+    elif opt in ('-s','--performselect'):
         select = arg
-    elif opt in ('u', '--update'):
-        update =arg
-
+    elif opt in ('-u', '--performupdate'):
+        update = arg
+    else:
+        print("Unknown arg")
+        sys.exit()
 
 def testing(): 
     
